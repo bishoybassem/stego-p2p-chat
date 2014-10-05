@@ -4,16 +4,16 @@ A Java chat application implemented in a decentralized P2P fashion. It uses seve
 
 ### Message Securing
 
-Cryptographic algorithms are used for securing the user's chat messages before being embedded in the image. Chat messages are encrypted according to the following scheme:
+Cryptographic algorithms are used for securing the user's chat messages before being embedded in the image. Chat messages are encrypted according to the following scheme :
 
-formatedMessage = Flag || IP<sub>R</sub> || Name<sub>R</sub> || IP<sub>S</sub> || Name<sub>S</sub> || ChatMessage <br>
-encryptedMessage = E<sub>AES, K</sub>(formatedMessage || Sign<sub>PR<sub>S</sub></sub>(formatedMessage))
+FormatedMessage = Flag || IP<sub>R</sub> || Name<sub>R</sub> || IP<sub>S</sub> || Name<sub>S</sub> || ChatMessage <br>
+EncryptedMessage = E<sub>AES, K</sub>(formatedMessage || Sign<sub>PR<sub>S</sub></sub>(formatedMessage))
 
 Where E<sub>AES, K</sub> is the AES encryption using a 128 bits symmetric key K, Sign<sub>PR<sub>S</sub></sub> is the digital signature algorithm (DSA) for generating signatures signed with the senders private key, IP<sub>S</sub> and IP<sub>R</sub> are the ip addresses of the sender and the receiver respectively, Name<sub>S</sub> and Name<sub>R</sub> are the used names of the sender and the receiver respectively, and Flag is a bit flag (0/1) denoting whether the sent message is public or private.
 
-The user's identity consists of his public data, which are his used name and his public DSA key. This identity message acts as a log-in message, therefore, it is also secured to prevent any unauthorized access. It is encrypted according to the following scheme:
+The user's identity consists of his public data, which are his used name and his public DSA key. This identity message acts as a log-in message, therefore, it is also secured to prevent any unauthorized access. It is encrypted according to the following scheme :
 
-encryptedIdentity = E<sub>AES, K</sub>(IP<sub>S</sub> || Name<sub>S</sub> || PU<sub>S</sub> || Sign<sub>PR<sub>S</sub></sub>(IP<sub>S</sub> || Name<sub>S</sub> || PU<sub>S</sub>))
+EncryptedIdentity = E<sub>AES, K</sub>(IP<sub>S</sub> || Name<sub>S</sub> || PU<sub>S</sub> || Sign<sub>PR<sub>S</sub></sub>(IP<sub>S</sub> || Name<sub>S</sub> || PU<sub>S</sub>))
 
 
 ### Security Features
