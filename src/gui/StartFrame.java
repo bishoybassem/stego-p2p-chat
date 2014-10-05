@@ -132,9 +132,10 @@ public class StartFrame extends JFrame {
 	private void start(String name) {
 		try {
 			ChatManager ic = new ChatManager(name);
+			StegoP2PChat chat = new StegoP2PChat(ic, name);		
 			ic.start();
 			setVisible(false);
-			new StegoP2PChat(ic, name).setVisible(true);
+			chat.setVisible(true);
 		} catch (Exception ex) {
 			new MessageDialog(this).showError("Could not start the chat session\nCheck that there no other instances running");
 		}

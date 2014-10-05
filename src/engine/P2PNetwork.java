@@ -48,7 +48,7 @@ public class P2PNetwork {
 				try {
 					sendIdentity(DISCOVER);
 				} catch (Exception ex) {
-					ex.printStackTrace();
+
 				}
 			}
 			

@@ -1,4 +1,6 @@
 package gui;
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -48,6 +50,7 @@ public class StegoP2PChat extends JFrame {
 	private JTextArea typeArea;
 	private JFileChooser imageChooser;
 	private MessageDialog messageDialog;
+	private AudioClip chatAC;
 	
 	private ChatManager chatManager;
 	private BufferedImage img;
@@ -55,7 +58,7 @@ public class StegoP2PChat extends JFrame {
 	
 	public static final Color COLOR1 = new Color(191, 230, 249);
 	public static final Color COLOR2 = new Color(245, 251, 254);
-	
+
 	public StegoP2PChat(ChatManager manager, String name) throws Exception {
 		super("Stego-P2P Chat  [" + name + "]");
 		setResizable(false);
@@ -64,6 +67,12 @@ public class StegoP2PChat extends JFrame {
 		messageDialog = new MessageDialog(this);
 		
 		setIconImages(Arrays.asList(StartFrame.LOGO_ICON_S.getImage(), StartFrame.LOGO_ICON.getImage()));
+		
+		try {
+			chatAC = Applet.newAudioClip(StegoP2PChat.class.getResource("resources/chat.wav"));	
+		} catch (Exception ex) {
+			
+		}
 		
 		Border b1 = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		Border b2 = BorderFactory.createLineBorder(COLOR1.darker(), 1);
@@ -236,6 +245,7 @@ public class StegoP2PChat extends JFrame {
 					chatArea.setText(chatToString(peer.getChat()));
 					peer.setUnseen(0);
 				}
+				chatAC.play();
 				clients.repaint();
 			}
 			
@@ -244,6 +254,7 @@ public class StegoP2PChat extends JFrame {
 					chatArea.setText(chatToString(lobby.getChat()));
 					lobby.setUnseen(0);
 				}
+				chatAC.play();
 				clients.repaint();
 			}
 			
@@ -252,9 +263,9 @@ public class StegoP2PChat extends JFrame {
 		chatManager.getNetwork().addNetworkListener(new NetworkListener() {
 			
 			public void peerLeft(User peer) {
-				if (peer.equals(clients.getSelectedValue()))
+				if (peer.equals(clients.getSelectedValue())) {
 					clients.setSelectedIndex(0);
-	
+				}
 				listModel.removeElement(peer);
 			}
 			
